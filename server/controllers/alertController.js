@@ -31,7 +31,7 @@ const getAllAlerts = async (req, res) => {
 const getHeatmapData = async (req, res) => {
   try {
     const alerts = await Alert.find({ active: true }).select(
-      "lat lon severity alertType city message temperature"
+      "lat lon severity alertType city message temperature createdAt"
     );
     res.json(alerts);
   } catch (error) {
