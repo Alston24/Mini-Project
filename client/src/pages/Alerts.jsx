@@ -28,7 +28,10 @@ export const Alerts = () => {
   return (
     <div className="alerts-page" id="alerts-page">
       <div className="page-header">
-        <h1>⚠️ Active Alerts</h1>
+        <h1 className="alerts-title">
+          <span className="alerts-title-icon" aria-hidden="true">⚠️</span>
+          <span>Active Alerts</span>
+        </h1>
         <p>Browse and filter real-time weather alerts from around the world</p>
       </div>
 

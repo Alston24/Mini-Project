@@ -61,7 +61,7 @@ export const Heatmap = () => {
     Object.keys(ALERT_TYPES).reduce((acc, type) => ({ ...acc, [type]: true }), {})
   );
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [weatherLayer, setWeatherLayer] = useState("none"); // none, temp, precipitation, clouds, wind
+  const [weatherLayer, setWeatherLayer] = useState("none");
 
   const OWM_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
@@ -91,7 +91,6 @@ export const Heatmap = () => {
 
   return (
     <div className="heatmap-page" id="heatmap-page">
-      {/* Filter Sidebar */}
       <div className={`heatmap-sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="sidebar-header">
           <h3>🗺️ Map Controls</h3>
@@ -185,8 +184,28 @@ export const Heatmap = () => {
         )}
       </div>
 
-      {/* Map */}
       <div className="heatmap-map-container">
+        <div className="heatmap-map-hero">
+          <div>
+            <p className="heatmap-kicker">Live monitoring</p>
+            <h1>Global Weather Heatmap</h1>
+            <p>
+              Track active alerts, switch map layers, and spot patterns across the world in one view.
+            </p>
+          </div>
+          <div className="heatmap-summary">
+            <div className="summary-pill">
+              <span>{filteredAlerts.length}</span>
+              <small>Visible alerts</small>
+            </div>
+            <div className="summary-pill">
+              <span>{filteredData.length}</span>
+              <small>Map points</small>
+            </div>
+          </div>
+        </div>
+
+        <div className="heatmap-map-frame">
         {loading && (
           <div className="map-loading">
             <div className="spinner" />
@@ -206,7 +225,6 @@ export const Heatmap = () => {
             attribution='&copy; <a href="https://carto.com/">CARTO</a>'
           />
           
-          {/* Weather Overlay Layer */}
           {weatherLayer !== "none" && OWM_KEY && (
             <TileLayer
               key={weatherLayer}
@@ -222,8 +240,8 @@ export const Heatmap = () => {
           ))}
         </MapContainer>
 
-        {/* Dynamic Legend / Scale Bar */}
         <MapLegend layer={weatherLayer} />
+        </div>
       </div>
     </div>
   );
