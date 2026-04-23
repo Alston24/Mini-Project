@@ -44,7 +44,7 @@ export const AlertMarker = ({ alert }) => {
             {alert.message}
           </p>
           <p style={{ margin: "4px 0 0", fontSize: "0.75em", opacity: 0.6 }}>
-            {timeAgo(alert.createdAt)}
+            {timeAgo(new Date(alert.createdAt))}
           </p>
         </div>
       </Popup>
