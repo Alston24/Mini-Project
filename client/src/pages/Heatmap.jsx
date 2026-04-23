@@ -62,8 +62,11 @@ export const Heatmap = () => {
   );
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [weatherLayer, setWeatherLayer] = useState("none"); // none, temp, precipitation, clouds, wind
-
   const OWM_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
+
+  if (!OWM_KEY) {
+    console.warn("⚠️ OpenWeather API Key is missing in .env. Weather layers will not be visible.");
+  }
 
   /** Toggles a specific alert type filter. */
   const toggleFilter = (type) => {
@@ -84,8 +87,8 @@ export const Heatmap = () => {
   const weatherLayers = [
     { id: "none", label: "Standard Map", icon: "🌍" },
     { id: "temp_new", label: "Temperature", icon: "🌡️" },
-    { id: "precipitation_new", label: "Rain / Snow", icon: "🌧️" },
-    { id: "clouds_new", label: "Clouds", icon: "☁️" },
+    { id: "precipitation_new", label: "Precipitation", icon: "🌧️" },
+    { id: "clouds_new", label: "Cloud Cover", icon: "☁️" },
     { id: "wind_new", label: "Wind Speed", icon: "💨" },
   ];
 
@@ -206,13 +209,18 @@ export const Heatmap = () => {
             attribution='&copy; <a href="https://carto.com/">CARTO</a>'
           />
           
-          {/* Weather Overlay Layer */}
+          {/* Weather Overlay Layer (OpenWeatherMap) */}
           {weatherLayer !== "none" && OWM_KEY && (
             <TileLayer
               key={weatherLayer}
               url={`https://tile.openweathermap.org/map/${weatherLayer}/{z}/{x}/{y}.png?appid=${OWM_KEY}`}
               opacity={0.7}
               attribution='&copy; <a href="https://openweathermap.org/">OpenWeatherMap</a>'
+              eventHandlers={{
+                tileerror: (e) => {
+                  console.error("❌ Map Tile 404: Your API Key might be inactive or restricted for this layer.", e);
+                }
+              }}
             />
           )}
 

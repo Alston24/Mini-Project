@@ -3,6 +3,10 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
+if (import.meta.env.PROD) {
+  console.log("🚀 Production Mode: Connecting to API at", API_BASE_URL);
+}
+
 /**
  * Pre-configured axios instance for all API calls.
  * Automatically attaches JWT token from localStorage.

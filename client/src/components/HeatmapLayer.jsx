@@ -14,6 +14,7 @@ export const HeatmapLayer = ({ data }) => {
   const map = useMap();
 
   useEffect(() => {
+    console.log(`🗺️ HeatmapLayer: Rendering ${data.length} points.`);
     if (!data || data.length === 0) return;
 
     const points = data.map((alert) => [
